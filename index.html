@@ -1,44 +1,31 @@
-<!doctype html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <link rel="stylesheet" href="static/style.css" />
-</head>
-<body>
-    <div id="login-background"></div>
-    <div id="wrapper">
-        <!--<div id="clock-box">
-            <script>startTime();</script>
-        </div> -->
-        <br>
-        <br>
-        <br>
-        <div id="login-box">
-            <img id="login-picture">
-            <div id="login-response"></div>
-            <br>
-            <form id="login-form" action="javascript: provide_secret();">
-                <div id="last"><</div>
-                <div id="container">
-                    <div id="name">
-
-                    </div>
-                </div>
-                <div id="next">></div>
-                <input placeholder="パスワード" type="password" id="login-password" tabindex="2">
-                <button id="login-button" type="submit" tabindex="3">
-                    ログイン
-                </button>
-            </form>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Lightdm Gab Gradient</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+  </head>
+  <body class="gradient-anime">
+    <form class="container middle">
+      <div class="user-panel">
+        <div class="last">&lt;</div>
+        <div class="avatar">
+          <img src="assets/img/avatar.png">
         </div>
-    </div>
-    
-    <!-- <div id="login-bar">
-        <img id="login-shutdown" src="static/action-shutdown.png" onclick="lightdm.shutdown();">
-        <img id="login-restart" src="static/action-reboot.png" onclick="lightdm.restart();">
-    </div> -->
-    <script src="js/mock.js"></script>
-    <script src="js/jquery-2.1.0.min.js"></script>
-    <script type="text/javascript" src="js/main.js"></script>
-</body>
+        <div class="next">&gt;</div>
+      </div>
+      <div class="message"></div>
+      <div class="user"></div>
+      <input type="password" class="password" placeholder="パスワード">
+      <div class="config">
+        <select class="select language"></select>
+        <select class="select session"></select>
+      </div>
+      <button class="login gradient-anime" type="submit">ログイン</button>
+    </form>
+    <script src="assets/js/mock.js"></script>
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/main.js"></script>
+  </body>
 </html>

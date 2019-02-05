@@ -1,0 +1,131 @@
+@keyframes move-offset {
+	0% { background-position: 0% 0; }
+	50% { background-position: 100% 0; }
+	100% { background-position: 0% 0; }
+}
+
+.gradient-anime {
+ 	background: linear-gradient(270deg, #4bd3ff, #ff8585, #8598ff);
+	background-size: 600% 100%;
+	animation: move-offset 30s ease-in-out infinite;
+}
+
+body {
+	font-family: 'WenQuanYi Micro Hei', sans-serif;
+	position: relative;
+}
+
+.middle {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+.container {
+	width: 300px;
+	margin: auto;
+	padding: 50px;
+	background-color: white;
+	border-radius: 25px;
+}
+
+.container img {
+	width: 100px;
+	height: 100px;
+	display: block;
+	margin: 0 auto;
+	border-radius: 50%;
+}
+
+.user-panel {
+	display: flex;
+}
+
+.user-panel .avatar {
+	flex: 1;
+}
+
+.user-panel .last,
+.user-panel .next {
+	user-select: none;
+	padding: 0 10px;
+	line-height: 100px;
+	cursor: pointer;
+	color: rgba(0, 0, 0, .4);
+	border-radius: 5px;
+	transition: color .5s;
+	vertical-align: middle;
+}
+.user-panel .last:hover,
+.user-panel .next:hover {
+	color: rgba(0, 0, 0, .8);
+	transition: color .5s;
+}
+
+.user {
+	font-size: 1.2rem;
+	margin-bottom: 25px;
+	text-align: center;
+	line-height: 37px;
+	color: white;
+	background-color: rgba(0, 0, 0, .2);
+	border-radius: 5px;
+}
+
+.password {
+	font-size: 1rem;
+	border: solid #ff8585 2px;
+	outline: none;
+	padding: 5px;
+	border-radius: 5px;
+	display: block;
+	width: 100%;
+	box-sizing: border-box;
+	text-align: center;
+	color: rgba(0, 0, 0, .6);
+}
+
+.message {
+	height: 30px;
+	line-height: 30px;
+	color: #ff8585;
+	margin: 10px 0;
+	text-align: center;
+}
+
+.login {
+	font-size: 1.1rem;
+	margin-top: 25px;
+	display: block;
+	border: none;
+	outline: none;
+	text-align: center;
+	height: 37px;
+	width: 100%;
+	padding: 5px;
+	border-radius: 5px;
+	color: white;
+	cursor: pointer;
+}
+
+.config {
+	display: flex;
+	justify-content: space-between;
+	margin-top: 25px;
+}
+
+.select {
+	font-size: 1rem;
+	width: 45%;
+	background: white;
+	border: solid 2px #ff8585;
+	outline: none;
+	border-radius: 5px;
+	color: rgba(0, 0, 0, .6);
+}
+
+html, body {
+	margin: 0;
+	padding: 0;
+}

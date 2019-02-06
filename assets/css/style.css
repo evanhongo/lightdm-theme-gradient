@@ -3,11 +3,24 @@
 	50% { background-position: 100% 0; }
 	100% { background-position: 0% 0; }
 }
+@keyframes shake {
+	0% { transform: translateX(0px); }
+	10% { transform: translateX(5px); }
+	30% { transform: translateX(-5px); }
+	50% { transform: translateX(5px); }
+	70% { transform: translateX(-5px); }
+	90% { transform: translateX(5px); }
+	100% { transform: translateX(0px); }
+}
 
 .gradient-anime {
  	background: linear-gradient(270deg, #4bd3ff, #ff8585, #8598ff);
 	background-size: 600% 100%;
 	animation: move-offset 30s ease-in-out infinite;
+}
+
+.shake-anime {
+	animation: shake .5s linear;
 }
 
 body {
@@ -23,8 +36,13 @@ body {
 }
 
 .container {
-	width: 300px;
 	margin: auto;
+}
+
+.form {
+	margin: 0;
+	padding: 0;
+	width: 300px;
 	padding: 50px;
 	background-color: white;
 	border-radius: 25px;
@@ -146,4 +164,9 @@ body {
 html, body {
 	margin: 0;
 	padding: 0;
+}
+
+.last,
+.next {
+	user-select: none;
 }

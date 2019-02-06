@@ -85,9 +85,12 @@ var authentication_complete = function authentication_complete() {
   if (lightdm.is_authenticated) {
     lightdm.login(lightdm.authentication_user, lightdm.sessions[now_session].key);
   } else {
-    $('.password').val('');
     switch_user(now_user);
     show_message('違います！');
+    $('.form').addClass('shake-anime');
+    setTimeout(function () {
+      $('.form').removeClass('shake-anime');
+    }, 500);
   }
 };
 
@@ -113,15 +116,33 @@ var init = function init() {
   switch_session(now_session);
   switch_language(now_language);
 
-  $('.container').submit(submit);
-  $('.user-panel .last').click(function () { switch_user(last(now_user, lightdm.users.length)); });
-  $('.user-panel .next').click(function () { switch_user(next(now_user, lightdm.users.length)); });
-  $('.session .last').click(function () { switch_session(last(now_session, lightdm.sessions.length)); });
-  $('.session .next').click(function () { switch_session(next(now_session, lightdm.sessions.length)); });
-  $('.language .last').click(function () { switch_language(last(now_language, lightdm.languages.length)); });
-  $('.language .next').click(function () { switch_language(next(now_language, lightdm.languages.length)); });
+  $('.form').submit(submit);
+
+  // hide '<' and '>' button if no other options avaliable
+  if (lightdm.users.length === 1) {
+    $('.user-panel .last').hide();
+    $('.user-panel .next').hide();
+  } else {
+    $('.user-panel .last').click(function () { switch_user(last(now_user, lightdm.users.length)); });
+    $('.user-panel .next').click(function () { switch_user(next(now_user, lightdm.users.length)); });
+  }
+  if (lightdm.sessions.length === 1) {
+    $('.session .last').hide();
+    $('.session .next').hide();
+  } else {
+    $('.session .last').click(function () { switch_session(last(now_session, lightdm.sessions.length)); });
+    $('.session .next').click(function () { switch_session(next(now_session, lightdm.sessions.length)); });
+  }
+  if (lightdm.languages.length === 1) {
+    $('.language .last').hide();
+    $('.language .next').hide();
+  } else {
+    $('.language .last').click(function () { switch_language(last(now_language, lightdm.languages.length)); });
+    $('.language .next').click(function () { switch_language(next(now_language, lightdm.languages.length)); });
+  }
 
   $('.password').focus();
+
 };
 
 if (typeof lightdm !== 'undefined') {

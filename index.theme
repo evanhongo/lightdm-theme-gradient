@@ -1,5 +1,5 @@
 [theme]
-name=lightdm-gab-gradient
+name=lightdm-theme-gradient
 description=Animated Gradient background
 engine=lightdm-webkit-greeter
 url=index.html

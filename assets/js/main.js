@@ -1,8 +1,5 @@
 'use strict';
 
-var userlist = [];
-var now = 0;
-
 var show_message = function show_message(msg) {
   $('.message').text(msg);
 };
@@ -22,6 +19,16 @@ var cache = {
   }
 }
 
+var default_user = function default_user() {
+  var last = cache.get('user');
+  if (!last) return 0;
+  for (var i = 0; i < lightdm.users.length; ++ i) {
+    if (lightdm.users[i].name === last) {
+      return i;
+    }
+  }
+  return 0;
+};
 var default_session = function default_session() {
   var last = cache.get('session');
   if (!last) return 0;
@@ -31,7 +38,7 @@ var default_session = function default_session() {
     }
   }
   return 0;
-}
+};
 var default_language = function default_language() {
   var last = cache.get('language');
   if (!last) return 0;
@@ -41,40 +48,45 @@ var default_language = function default_language() {
     }
   }
   return 0;
-}
+};
+
+var now_user = default_user();
+var now_session = default_session();
+var now_language = default_language();
 
 var switch_user = function switch_user(index) {
-  var choosing = userlist[index];
+  now_user = index;
+  var choosing = lightdm.users[index];
 
-  $('.user').text(choosing.dispname);
+  $('.user').text(choosing.display_name);
 
   clear_message();
   lightdm.cancel_timed_login();
   if (lightdm._username) {
     lightdm.cancel_authentication();
   }
-  lightdm.start_authentication(choosing.username);
+  lightdm.start_authentication(choosing.name);
+  cache.set('user', choosing.name);
+};
+var switch_session = function switch_session(index) {
+  now_session = index;
+  var choosing = lightdm.sessions[index];
+  $('.session .content').text(choosing.name);
+  cache.set('session', choosing.name);
+};
+var switch_language = function switch_language(index) {
+  now_language = index;
+  var choosing = lightdm.languages[index];
+  $('.language .content').text(choosing.name);
+  cache.set('language', choosing.name);
 };
 
 var authentication_complete = function authentication_complete() {
   if (lightdm.is_authenticated) {
-
-    const session = lightdm.sessions[$('.session')[0].selectedIndex];
-    cache.set('session', session.name);
-
-    const language = lightdm.languages[$('.language')[0].selectedIndex];
-    cache.set('language', language.name);
-
-    show_message('お帰りなさい！ご主人様！');
-
-    // wait for cache
-    setTimeout(function () {
-      lightdm.login(lightdm.authentication_user, session.key);
-    }, 1000);
-
+    lightdm.login(lightdm.authentication_user, lightdm.sessions[now_session].key);
   } else {
     $('.password').val('');
-    switch_user(now);
+    switch_user(now_user);
     show_message('違います！');
   }
 };
@@ -89,37 +101,25 @@ var submit = function submit() {
   return false;
 };
 
-var init = function init() {
-  lightdm.users.forEach(function (user) {
-    userlist.push({
-      username: user.name,
-      dispname: user.display_name
-    });
-  });
+var last = function last(i, n) {
+  return i ? i - 1 : n - 1;
+}
+var next = function next(i, n) {
+  return (i + 1) % n;
+}
 
-  var len = userlist.length;
-  switch_user(now);
+var init = function init() {
+  switch_user(now_user);
+  switch_session(now_session);
+  switch_language(now_language);
 
   $('.container').submit(submit);
-
-  $('.last').click(function () {
-    now = ((now - 1) % len + len) % len;
-    switch_user(now);
-  });
-  $('.next').click(function () {
-    now = (now + 1) % len;
-    switch_user(now);
-  });
-
-  lightdm.sessions.forEach(function (session) {
-    $('.session').append($('<option/>', { text: session.name }));
-  });
-  $('.session')[0].selectedIndex = default_session();
-
-  lightdm.languages.forEach(function (language) {
-    $('.language').append($('<option/>', { text: language.name }));
-  });
-  $('.language')[0].selectedIndex = default_language();
+  $('.user-panel .last').click(function () { switch_user(last(now_user, lightdm.users.length)); });
+  $('.user-panel .next').click(function () { switch_user(next(now_user, lightdm.users.length)); });
+  $('.session .last').click(function () { switch_session(last(now_session, lightdm.sessions.length)); });
+  $('.session .next').click(function () { switch_session(next(now_session, lightdm.sessions.length)); });
+  $('.language .last').click(function () { switch_language(last(now_language, lightdm.languages.length)); });
+  $('.language .next').click(function () { switch_language(next(now_language, lightdm.languages.length)); });
 
   $('.password').focus();
 };

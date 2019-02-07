@@ -67,6 +67,7 @@ var switch_user = function switch_user(index) {
   }
   lightdm.start_authentication(choosing.name);
   cache.set('user', choosing.name);
+  $('.avatar-img').css('background-image', 'url(assets/img/stickers/' + (Math.floor(Math.random() * 20) + 1) + '.png)');
 };
 var switch_session = function switch_session(index) {
   now_session = index;

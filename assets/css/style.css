@@ -48,12 +48,13 @@ body {
 	border-radius: 25px;
 }
 
-.container img {
+.container .avatar-img {
 	width: 100px;
 	height: 100px;
 	display: block;
 	margin: 0 auto;
 	border-radius: 50%;
+	background-size: cover;
 }
 
 .user-panel {

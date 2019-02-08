@@ -97,13 +97,15 @@ if (!('lightdm' in window)) {
     if (!user && secret == lightdm._username) {
       lightdm.is_authenticated = true;
       lightdm.authentication_user = user;
+      authentication_complete();
     } else {
       lightdm.is_authenticated = false;
       lightdm.authentication_user = null;
       lightdm._username = null;
+      // 2s delay
+      setTimeout(authentication_complete, 2000);
     }
 
-    authentication_complete();
   };
 
   lightdm.start_authentication = function(username) {

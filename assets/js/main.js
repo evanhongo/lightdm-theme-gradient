@@ -54,6 +54,10 @@ var now_user = default_user();
 var now_session = default_session();
 var now_language = default_language();
 
+var change_avatar = function change_avatar(name) {
+  $('.avatar-img').css('background-image', 'url(assets/img/stickers/' + name + '.png)');
+}
+
 var switch_user = function switch_user(index) {
   now_user = index;
   var choosing = lightdm.users[index];
@@ -67,7 +71,7 @@ var switch_user = function switch_user(index) {
   }
   lightdm.start_authentication(choosing.name);
   cache.set('user', choosing.name);
-  $('.avatar-img').css('background-image', 'url(assets/img/stickers/' + (Math.floor(Math.random() * 20) + 1) + '.png)');
+  change_avatar('primary-' + (index % 4 + 1));
 };
 var switch_session = function switch_session(index) {
   now_session = index;
@@ -82,11 +86,13 @@ var switch_language = function switch_language(index) {
   cache.set('language', choosing.name);
 };
 
+var password_failed_times = 0;
 var authentication_complete = function authentication_complete() {
   if (lightdm.is_authenticated) {
     lightdm.login(lightdm.authentication_user, lightdm.sessions[now_session].key);
   } else {
     switch_user(now_user);
+    change_avatar('password-' + ((password_failed_times ++) % 3 + 1));
     show_message('違います！');
     $('.form').addClass('shake-anime');
     setTimeout(function () {
@@ -98,6 +104,8 @@ var authentication_complete = function authentication_complete() {
 var submit = function submit() {
   var password = $('.password').val();
   if (password) {
+    change_avatar('loading');
+    show_message('確認中...');
     lightdm.provide_secret(password);
   } else {
     show_message('あれっ？パスワードは？');

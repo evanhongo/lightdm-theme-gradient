@@ -152,6 +152,23 @@ var init = function init() {
 
   $('.password').focus();
 
+  var buttons = [
+    "shutdown",
+    "restart",
+    "suspend",
+    "hibernate",
+  ];
+
+  buttons.forEach(function (type) {
+    if (!lightdm['can_' + type]) {
+      $('.' + type).hide();
+    } else {
+      $('.' + type).click(function () {
+        lightdm[type]();
+      });
+    }
+  });
+
 };
 
 if (typeof lightdm !== 'undefined') {

@@ -94,7 +94,7 @@ body {
 
 .password {
 	font-size: 1rem;
-	border: solid #ff8585 2px;
+	border: solid #cccccc 2px;
 	outline: none;
 	border-radius: 5px;
 	display: block;
@@ -103,6 +103,10 @@ body {
 	text-align: center;
 	height: 37px;
 	color: rgba(0, 0, 0, .6);
+	transition: border .5s;
+}
+.password:focus {
+	border: solid #ff8585 2px;
 }
 
 .message {
@@ -190,4 +194,22 @@ html, body {
 	margin-right: 30px;
 	display: inline-block;
 	cursor: pointer;
+}
+
+.blackwall {
+	animation: fade-out 2s forwards;
+	display: inline-block;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
+	background-color: black;
+}
+
+@keyframes fade-out {
+	to {
+		opacity: 0;
+		visibility: hidden;
+	}
 }

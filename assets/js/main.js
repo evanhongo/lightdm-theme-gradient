@@ -93,7 +93,7 @@ var authentication_complete = function authentication_complete() {
   } else {
     switch_user(now_user);
     change_avatar('password-' + ((password_failed_times ++) % 3 + 1));
-    show_message('違います！');
+    show_message('Password wrong (๑´ㅂ`๑)');
     $('.form').addClass('shake-anime');
     setTimeout(function () {
       $('.form').removeClass('shake-anime');
@@ -105,10 +105,10 @@ var submit = function submit() {
   var password = $('.password').val();
   if (password) {
     change_avatar('loading');
-    show_message('確認中...');
+    show_message('Confirming... (,,・ω・,,)');
     lightdm.provide_secret(password);
   } else {
-    show_message('あれっ？パスワードは？');
+    show_message('Please enter your password (๑•́ ₃ •̀๑)');
   }
   return false;
 };

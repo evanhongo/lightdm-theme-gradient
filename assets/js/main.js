@@ -23,7 +23,7 @@ var default_user = function default_user() {
   var last = cache.get('user');
   if (!last) return 0;
   for (var i = 0; i < lightdm.users.length; ++ i) {
-    if (lightdm.users[i].name === last) {
+    if (lightdm.users[i].username === last) {
       return i;
     }
   }
@@ -65,12 +65,12 @@ var switch_user = function switch_user(index) {
   $('.user').text(choosing.display_name);
 
   clear_message();
-  lightdm.cancel_timed_login();
-  if (lightdm._username) {
+  lightdm.cancel_autologin();
+  if (lightdm.authentication_user) {
     lightdm.cancel_authentication();
   }
-  lightdm.start_authentication(choosing.name);
-  cache.set('user', choosing.name);
+  lightdm.authenticate(choosing.username);
+  cache.set('user', choosing.username);
   change_avatar('primary-' + (index % 4 + 1));
 };
 var switch_session = function switch_session(index) {
@@ -89,7 +89,7 @@ var switch_language = function switch_language(index) {
 var password_failed_times = 0;
 var authentication_complete = function authentication_complete() {
   if (lightdm.is_authenticated) {
-    lightdm.login(lightdm.authentication_user, lightdm.sessions[now_session].key);
+    lightdm.start_session(lightdm.sessions[now_session].key);
   } else {
     switch_user(now_user);
     change_avatar('password-' + ((password_failed_times ++) % 3 + 1));
@@ -106,7 +106,7 @@ var submit = function submit() {
   if (password) {
     change_avatar('loading');
     show_message('Confirming... (,,・ω・,,)');
-    lightdm.provide_secret(password);
+    lightdm.respond(password);
   } else {
     show_message('Please enter your password (๑•́ ₃ •̀๑)');
   }
@@ -121,6 +121,7 @@ var next = function next(i, n) {
 }
 
 var init = function init() {
+  lightdm.authentication_complete.connect(authentication_complete); 
   switch_user(now_user);
   switch_session(now_session);
   switch_language(now_language);

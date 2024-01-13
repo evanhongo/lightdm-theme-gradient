@@ -1,20 +1,24 @@
 # lightdm-theme-gradient
 
-**install**
+Prerequisities
+- lightdm
+- [web-greeter]()
 
+**Installation**
+
+1. Download the theme at `/usr/share/web-greeter/themes/gradient`
 ```bash
-cd /usr/share/lightdm-webkit/themes
-sudo git clone https://github.com/swwind/lightdm-theme-gradient gradient
-sudo vim /etc/lightdm/lightdm-webkit2-greeter.conf
-# webkit_theme = gradient
+sudo git clone https://github.com/swwind/lightdm-theme-gradient /usr/share/web-greeter/themes/gradient
 ```
 
-**dev**
+2. Configure `/etc/lightdm/web-greeter.yml`
+```yaml
+greeter:
+    theme: gradient
+```
 
-```bash
-git clone https://github.com/swwind/lightdm-theme-gradient.git
-cd lightdm-theme-gradient
-./install.sh
-sudo vim /etc/lightdm/lightdm-webkit2-greeter.conf
-# webkit_theme = gradient
+3. Configure `/etc/lightdm/lightdm.conf`
+
+```
+greeter-session=web-greeter
 ```
